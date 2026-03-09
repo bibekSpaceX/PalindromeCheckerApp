@@ -1,48 +1,45 @@
 /**
  * ============================================================
- * MAIN CLASS - UseCase6PalindromeCheckerApp
+ * MAIN CLASS - UseCase7PalindromeCheckerApp
  * ============================================================
  *
- * Use Case 6: Queue + Stack Based Palindrome Check (Hardcoded)
+ * Use Case 7: Deque Based Optimized Palindrome Checker (Hardcoded)
  *
  * Description:
- * This class validates a palindrome using two data structures:
- * - Queue (FIFO - First In First Out)
- * - Stack (LIFO - Last In First Out)
+ * This class validates a palindrome using a Deque
+ * (Double Ended Queue).
  *
- * Characters are inserted into both structures and then
- * compared by removing from the front of the queue and
- * the top of the stack.
+ * Characters are inserted into the deque and then
+ * compared by removing elements from both ends:
+ * - removeFirst()
+ * - removeLast()
  *
- * If all characters match, the input string is a palindrome.
+ * This avoids reversing the string and provides
+ * efficient bidirectional comparison.
  *
  * @author Nikhil Kumar
- * @version 6.0
+ * @version 7.0
  */
 
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class PalindromeCheckerApp {
 
     /**
-     * Application entry point for UC6.
+     * Application entry point for UC7.
      */
     public static void main(String[] args) {
-
-        String input = "civic";
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        String input = "refer";
+        Deque<Character> deque = new ArrayDeque<>();
         for (char c : input.toCharArray()) {
-            queue.add(c);
-            stack.push(c);
+            deque.addLast(c);
         }
         boolean isPalindrome = true;
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove();
-            char fromStack = stack.pop();
-            if (fromQueue != fromStack) {
+        while (deque.size() > 1) {
+            char first = deque.removeFirst();
+            char last = deque.removeLast();
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
