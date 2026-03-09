@@ -1,14 +1,16 @@
 /**
  * ==============================================================
- * MAIN CLASS - UseCase12PalindromeCheckerApp
+ * MAIN CLASS - UseCase13PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * Use Case 13: Performance Comparison
  *
  * Description:
- * This class demonstrates how different palindrome
- * validation algorithms can be selected dynamically
- * at runtime using the Strategy Design Pattern.
+ * This class measures and compares the execution
+ * performance of a palindrome validation algorithm.
+ *
+ * It captures start and end time using System.nanoTime()
+ * and calculates the execution duration.
  */
 
 public class PalindromeCheckerApp {
@@ -18,42 +20,35 @@ public class PalindromeCheckerApp {
         // Hardcoded input
         String input = "level";
 
-        // Inject strategy
-        PalindromeStrategy strategy = new StackStrategy();
+        // Capture start time
+        long startTime = System.nanoTime();
 
-        boolean result = strategy.check(input);
+        // Palindrome check logic
+        boolean isPalindrome = true;
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + result);
-    }
-}
+        int start = 0;
+        int end = input.length() - 1;
 
+        while (start < end) {
 
-interface PalindromeStrategy {
-
-    boolean check(String input);
-}
-
-
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean check(String input) {
-
-        // Create stack
-        java.util.Stack<Character> stack = new java.util.Stack<>();
-
-        // Push characters into stack
-        for (char c : input.toCharArray()) {
-            stack.push(c);
-        }
-
-        // Compare with original string
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
-                return false;
+            if (input.charAt(start) != input.charAt(end)) {
+                isPalindrome = false;
+                break;
             }
+
+            start++;
+            end--;
         }
 
-        return true;
+        // Capture end time
+        long endTime = System.nanoTime();
+
+        // Calculate execution time
+        long executionTime = endTime - startTime;
+
+        // Print results
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + executionTime + " ns");
     }
 }
